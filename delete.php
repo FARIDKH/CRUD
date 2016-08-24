@@ -15,10 +15,13 @@
         $id = $_GET['id'];
         
         
-//        $sql = "DELETE FROM register WHERE id = $id";
-//        $query = mysqli_query($db_con,$sql);
+        $sql = "DELETE FROM register WHERE id = $id";
+        $query = mysqli_query($db_con,$sql);
         
-        
+        header ('Location:index.php');
+    }
+    if(isset($_POST['no'])){
+        header ('Location:index.php');
     }
     
     
@@ -34,9 +37,9 @@
         
         
         <div style="background-color:gray; padding:50px;" class="col-md-12">
-           <form method="post">
-                <input type="button" class="col-md-offset-2 btn btn-danger" name="yes" value="YES">
-                <input type="button" class="btn btn-default" name="no" value="NO">
+           <form action="" method="post">
+                <input type="submit" class="col-md-offset-2 btn btn-danger" name="yes" value="YES">
+                <input type="submit" class="btn btn-default" name="no" value="NO">
             </form>
         </div>
     </div>
