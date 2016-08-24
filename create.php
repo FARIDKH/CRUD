@@ -14,10 +14,12 @@
 <body>
 
     <?php
+    $emptyError=false;
     
-    
-    if(isset($_POST["create"])){  
+    if(isset($_POST["create"])){
         
+        
+    
         include "db.php";
         
         
@@ -26,16 +28,22 @@
         $phone = $_POST['phone'];
         
         
+        if(!empty($name) && !empty($email) && !empty($phone)){
+                        
         
         
         
-        $sql = "INSERT INTO register(name,email,mobile) VALUES('$name','$email','$phone')";
-        
-        $query=mysqli_query($db_con,$sql);
-        
-        
-        if($query){
-            header ('Location:index.php');
+            $sql = "INSERT INTO register(name,email,mobile) VALUES('$name','$email','$phone')";
+
+            $query=mysqli_query($db_con,$sql);
+
+
+            if($query){
+                header ('Location:index.php');
+            }
+            
+        }else{
+           $emptyError = "Fill all gaps";
         }
         
     }else{
@@ -50,7 +58,16 @@
     <div class="container">
         <h1>Create a Customer</h1>
         
+        <?php if($emptyError) { ?>
+            <div class="alert alert-danger">
 
+
+                <p><?= $emptyError  ?></p>
+
+
+            </div>
+          
+        <?php }  ?>
            <div class="col-md-12">
                <div class="col-md-2">
                     <ul class="list-unstyled text-right">
@@ -81,11 +98,13 @@
                             </ul>
 
                     </div>
-                    <div style="background-color:gray; padding:50px;" class="col-md-12">
+        
+                   <div style="background-color:gray; padding:50px;" class="col-md-12">
                         <input type="submit" class="col-md-offset-2 btn btn-success" name="create" value="CREATE">
                         <button class="btn btn-default" name="back"><a href="index.php">BACK</a></button>
                     </div>
                 </form>
+                 
             </div>    
     </div>
 
