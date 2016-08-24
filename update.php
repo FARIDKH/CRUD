@@ -12,7 +12,59 @@
            
     </style>
 <body>
-
+    <?php
+    include "db.php";
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM register  WHERE id = $id";
+        
+        $query=mysqli_query($db_con,$sql);
+        
+        
+        $row = mysqli_fetch_assoc($query);   
+        
+        $prevName = $row['name']; 
+            
+        
+    if(isset($_POST["update"])){  
+        
+        
+        
+        
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        
+        $id = $_GET['id'];
+            
+       
+        
+        
+        $sql = "UPDATE register SET name = '$name' , email = '$email' , mobile = '$phone' WHERE id = $id";
+        
+        $query=mysqli_query($db_con,$sql);
+        
+        
+        $row = mysqli_fetch_assoc($query);   
+        
+        
+        
+        
+        if($query){
+            header ('Location:index.php');
+        }
+        
+    } else {
+       
+    }
+    
+    
+    
+    
+    ?>
+    
+    
+    
+    
     <div class="container">
         <h1>Update a Customer</h1>
         
@@ -25,28 +77,31 @@
                         <li>Phone Number</li><br><br>
                     </ul>
                 </div>  
-                
-                <div class="col-md-10">
-                   <form>
-                        <ul class="list-unstyled text-left">
-                            <li>
+             <form action="" method="post">   
+                    <div class="col-md-10">
 
-                                <input type="text" class="form-control" placeholder="name">
+                            <ul class="list-unstyled text-left">
+                                <li>
 
-                            </li><br>
+                                    <input type="text" class="form-control" name="name" value="<?=  $prevName ?>">
 
-                            <li><input type="text" class="form-control" placeholder="email">
+                                </li><br>
 
-                            </li><br>
-                            <li><input type="text" class="form-control" placeholder="phone"></li><br><br>
+                                <li><input type="text" class="form-control" name="email" value="<?=  $row['email'] ?>">
 
-                        </ul>
-                    </form>
-                </div>
-                <div style="background-color:gray; padding:50px;" class="col-md-12">
-                    <button class="col-md-offset-2 btn btn-success" name="back">UPDATE</button>
-                    <button class="btn btn-default" name="back">BACK</button>
-                </div>    
+                                </li><br>
+                                <li><input type="text" class="form-control" name="phone" value="<?=  $row['mobile'] ?>">
+                                
+                                </li><br><br>
+
+                            </ul>
+
+                    </div>
+                    <div style="background-color:gray; padding:50px;" class="col-md-12">
+                        <input type="submit" class="col-md-offset-2 btn btn-success" name="update" value="UPDATE">
+                        <button class="btn btn-default" name="back"><a href="index.php">BACK</a></button>
+                    </div> 
+               </form>   
             </div>    
     </div>
 

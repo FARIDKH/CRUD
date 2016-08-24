@@ -7,19 +7,67 @@
     <body>
        <div class="container">
             <h1>PHP CRUD GRID</h1>
-            <button class="btn btn-success">CREATE</button><br>
-            <tbody>
-               <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <td>NAME</td>
-                            <td>EMAIL ADDRESS</td>
-                            <td>MOBILE NUMBER</td>
-                            <td>ACTION</td>
-                        </tr>
-                    </thead>
+            <form action="create.php" method="post">
+                <a href="create.php">
+                    <input type="button" class="btn btn-success"  value="CREATE"><br>  
+                </a>
+            </form>    
+               
+                <?php
+                
+                
+                
+                $host = "localhost";
+                $user_name = "root";
+                $password = "";
+                $db_name=  "register";
 
-                </table>
+                $db_con = mysqli_connect($host, $user_name , $password , $db_name);
+           
+                if($db_con){
+                $sql = "SELECT * FROM register";
+                $query = mysqli_query($db_con,$sql); ?>
+
+                <tbody>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>EMAIL ADDRESS</th>
+                            <th>MOBILE NUMBER</th>
+                            <th colspan="3">ACTION</th>
+                        </tr>
+                        <?php 
+
+                        while($row = mysqli_fetch_assoc($query)){
+                            ?> <tr> <?php 
+                            foreach($row as $key => $value){ ?>
+                               
+                                <td><?= $value ?></td>
+                        <?php } ?> <td>
+                                        <a href="read.php?id=<?= $row['id'] ?>" class="btn btn-default">READ</a>
+                                    </td>
+                                    <td>
+                                        <a href="update.php?id=<?= $row['id'] ?>" class="btn btn-success">UPDATE</a>
+                                    </td>
+                                    <td>
+                                        <a href="delete.php?id=<?= $row['id'] ?>" class="btn btn-danger">DELETE</a>
+                                    </td>
+                                </tr> <?php 
+                        }    
+                    
+                    
+                        ?>
+                    </table>
+                </tbody>    
+
+                <?php  } else {
+                        echo "database e qosulmadiniz!";
+                    }
+
+                    ?>
+
+                
             </tbody>
         </div>
     </body>
